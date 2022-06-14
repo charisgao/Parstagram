@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Parstagram</string>
+    <string name="password">password</string>
+    <string name="username">username</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="description">Description</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="submit">Submit</string>
+</resources>
