@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import com.example.parstagram.BitmapScaler;
 import com.example.parstagram.Post;
 import com.example.parstagram.R;
+import com.example.parstagram.activities.MainActivity;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -94,6 +96,10 @@ public class ComposeFragment extends Fragment {
                 }
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 savePost(description, currentUser, photoFile);
+
+                HomeFragment homeFragment = new HomeFragment();
+                FragmentTransaction transaction =getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.flContainer, homeFragment).addToBackStack(null).commit();
             }
         });
     }
