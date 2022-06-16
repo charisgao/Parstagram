@@ -44,9 +44,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Edit Profile"
-        android:minHeight="0dp"
+        android:backgroundTint="@color/login_blue"
         android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:text="Edit Profile"
         app:layout_constraintBottom_toTopOf="@+id/rvGridPosts"
         app:layout_constraintStart_toEndOf="@+id/ivProfilePicture" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.parstagram.EndlessRecyclerViewScrollListener;
 import com.example.parstagram.Post;
 import com.example.parstagram.PostsAdapter;
 import com.example.parstagram.R;
@@ -22,6 +23,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -33,6 +35,7 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView rvPosts;
     private SwipeRefreshLayout swipeContainer;
+    private EndlessRecyclerViewScrollListener scrollListener;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,7 +62,8 @@ public class HomeFragment extends Fragment {
         rvPosts.setAdapter(adapter);
 
         // Set the layout manager on the RV
-        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvPosts.setLayoutManager(linearLayoutManager);
 
         queryPosts();
 
@@ -77,6 +81,15 @@ public class HomeFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Date lastCreatedAt = allPosts.get(allPosts.size() - 1).getCreatedAt();
+                queryMorePosts(lastCreatedAt);
+            }
+        };
+        rvPosts.addOnScrollListener(scrollListener);
     }
 
     protected void queryPosts() {
@@ -106,6 +119,33 @@ public class HomeFragment extends Fragment {
                 // Save received posts to list and notify adapter of new data
                 allPosts.addAll(posts);
                 adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    protected void queryMorePosts(Date lastCreatedAt) {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.addDescendingOrder(Post.KEY_CREATED_KEY);
+        query.whereGreaterThan("createdAt", lastCreatedAt);
+        // Start an asynchronous call for posts
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                // Check for errors
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+
+                // For debugging
+                for (Post post : posts) {
+                    Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
+                }
+
+                // Save received posts to list and notify adapter of new data
+                allPosts.addAll(posts);
+                adapter.notifyItemRangeInserted(allPosts.size() - 1, 20);
             }
         });
     }

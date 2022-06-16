@@ -63,7 +63,7 @@ public class ProfileFragment extends Fragment {
 
         ParseFile profile = ParseUser.getCurrentUser().getParseFile("profile");
         if (profile != null) {
-            Glide.with(getContext()).load(profile.getUrl()).circleCrop().into(ivProfilePicture);
+            Glide.with(getContext()).load(profile.getUrl()).placeholder(R.drawable.profile).circleCrop().into(ivProfilePicture);
         }
 
 //            btnEditProfile.setOnClickListener(new View.OnClickListener() {

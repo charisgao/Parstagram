@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -44,8 +45,10 @@ public class ComposeFragment extends Fragment {
 
     public static final String TAG = "ComposeFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
+    public static final int GET_FROM_GALLERY = 3;
     private EditText etDescription;
     private Button btnTakePicture;
+    private Button btnUploadPicture;
     private ImageView ivPicture;
     private Button btnSubmit;
 
@@ -72,6 +75,7 @@ public class ComposeFragment extends Fragment {
 
         etDescription = view.findViewById(R.id.etDescription);
         btnTakePicture = view.findViewById(R.id.btnTakePicture);
+        btnUploadPicture = view.findViewById(R.id.btnUploadPicture);
         ivPicture = view.findViewById(R.id.ivPicture);
         btnSubmit = view.findViewById(R.id.btnSubmit);
 
@@ -79,6 +83,13 @@ public class ComposeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 launchCamera();
+            }
+        });
+
+        btnUploadPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchGallery();
             }
         });
 
@@ -108,6 +119,16 @@ public class ComposeFragment extends Fragment {
         // Create Intent to take a picture and return control to the calling application
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
+        // If there's an app that can handle the intent
+        if (i.resolveActivity(getContext().getPackageManager()) != null) {
+            startActivityForResult(i, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        }
+    }
+
+    private void launchGallery() {
+        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+
+        // TODO: fix
         // Create a File reference to access
         photoFile = getPhotoFileUri(photoFileName);
 
@@ -115,9 +136,8 @@ public class ComposeFragment extends Fragment {
         Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
         i.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
-        // If there's an app that can handle the intent (take picture)
         if (i.resolveActivity(getContext().getPackageManager()) != null) {
-            startActivityForResult(i, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+            startActivityForResult(i, GET_FROM_GALLERY);
         }
     }
 
@@ -157,6 +177,46 @@ public class ComposeFragment extends Fragment {
                 ivPicture.setImageBitmap(resizedBitmap);
             } else {
                 Toast.makeText(getContext(), "Picture wasn't taken", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (requestCode == GET_FROM_GALLERY && resultCode == RESULT_OK) {
+            Uri selectedImage = data.getData();
+            try {
+                ImageDecoder.Source source = ImageDecoder.createSource(getContext().getContentResolver(), selectedImage);
+                Bitmap bitmap = ImageDecoder.decodeBitmap(source);
+
+                // Scale the image smaller
+                Bitmap resizedBitmap = BitmapScaler.scaleToFitHeight(bitmap, 200);
+
+                // Store smaller bitmap to disk
+                // Configure byte output stream
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                // Compress the image further
+                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+                // Create a new file for the resized bitmap
+                File resizedFile = getPhotoFileUri(photoFileName + "_resized");
+                try {
+                    resizedFile.createNewFile();
+                    FileOutputStream fos = null;
+                    try {
+                        fos = new FileOutputStream(resizedFile);
+                        // Write the bytes of the bitmap to file
+                        fos.write(bytes.toByteArray());
+                        fos.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                ivPicture.setImageBitmap(resizedBitmap);
+                photoFile = resizedFile;
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
