@@ -63,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_home);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.nav_logo_whiteout_smaller);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setElevation(0);
     }
 
     @Override
