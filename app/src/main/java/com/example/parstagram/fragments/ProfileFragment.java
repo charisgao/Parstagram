@@ -6,24 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.parstagram.Post;
-import com.example.parstagram.PostsAdapter;
 import com.example.parstagram.ProfileAdapter;
 import com.example.parstagram.R;
+import com.example.parstagram.activities.MainActivity;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -56,7 +53,7 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvGridPosts = view.findViewById(R.id.rvGridPosts);
         tvProfileUsername = view.findViewById(R.id.tvProfileUsername);
-        ivProfilePicture = view.findViewById(R.id.ivProfilePicture);
+        ivProfilePicture = view.findViewById(R.id.ivEditProfilePicture);
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
 
         tvProfileUsername.setText(ParseUser.getCurrentUser().getUsername());
@@ -66,12 +63,14 @@ public class ProfileFragment extends Fragment {
             Glide.with(getContext()).load(profile.getUrl()).placeholder(R.drawable.profile).circleCrop().into(ivProfilePicture);
         }
 
-//            btnEditProfile.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    // TODO: add fragment for edit profile (username, profile picture)
-//                }
-//            });
+            btnEditProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditProfileFragment editProfileFragment = new EditProfileFragment();
+                    FragmentTransaction transaction =((MainActivity) getContext()).getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.flContainer, editProfileFragment).addToBackStack(null).commit();
+                }
+            });
 
         profilePosts = new ArrayList<>();
         profileAdapter = new ProfileAdapter(getContext(), profilePosts);

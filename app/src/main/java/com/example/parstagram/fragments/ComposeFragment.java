@@ -119,6 +119,13 @@ public class ComposeFragment extends Fragment {
         // Create Intent to take a picture and return control to the calling application
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
+        // Create a File reference to access
+        photoFile = getPhotoFileUri(photoFileName);
+
+        // Wrap File object into a content provider
+        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
+        i.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
+
         // If there's an app that can handle the intent
         if (i.resolveActivity(getContext().getPackageManager()) != null) {
             startActivityForResult(i, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
@@ -128,13 +135,12 @@ public class ComposeFragment extends Fragment {
     private void launchGallery() {
         Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
 
-        // TODO: fix
-        // Create a File reference to access
-        photoFile = getPhotoFileUri(photoFileName);
-
-        // Wrap File object into a content provider
-        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
-        i.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
+//        // Create a File reference to access
+//        photoFile = getPhotoFileUri(photoFileName);
+//
+//        // Wrap File object into a content provider
+//        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
+//        i.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
         if (i.resolveActivity(getContext().getPackageManager()) != null) {
             startActivityForResult(i, GET_FROM_GALLERY);
