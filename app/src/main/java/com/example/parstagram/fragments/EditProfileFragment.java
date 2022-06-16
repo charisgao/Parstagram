@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Path;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -81,7 +83,9 @@ public class EditProfileFragment extends Fragment {
 
         etProfileUsername.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
-                ParseUser.getCurrentUser().setUsername(etProfileUsername.getText().toString());
+                String newUsername = etProfileUsername.getText().toString();
+                ParseUser.getCurrentUser().put("username", newUsername);
+                ParseUser.getCurrentUser().saveInBackground();
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -172,7 +176,7 @@ public class EditProfileFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                ivEditProfilePicture.setImageBitmap(resizedBitmap);
+                ivEditProfilePicture.setImageBitmap(GetBitmapClippedCircle(Bitmap.createScaledBitmap(takenImage, 200, 200, true)));
                 photoFile = resizedFile;
 
                 ParseFile imageFile = new ParseFile(photoFile);
@@ -182,6 +186,25 @@ public class EditProfileFragment extends Fragment {
                 Toast.makeText(getContext(), "Picture wasn't taken", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public static Bitmap GetBitmapClippedCircle(Bitmap bitmap) {
+
+        final int width = bitmap.getWidth();
+        final int height = bitmap.getHeight();
+        final Bitmap outputBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+        final Path path = new Path();
+        path.addCircle(
+                (float)(width / 2)
+                , (float)(height / 2)
+                , (float) Math.min(width, (height / 2))
+                , Path.Direction.CCW);
+
+        final Canvas canvas = new Canvas(outputBitmap);
+        canvas.clipPath(path);
+        canvas.drawBitmap(bitmap, 0, 0, null);
+        return outputBitmap;
     }
 
     // Returns the File for a photo stored on disk given the fileName
