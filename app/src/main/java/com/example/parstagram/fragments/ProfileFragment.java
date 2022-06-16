@@ -22,8 +22,11 @@ import com.example.parstagram.ProfileAdapter;
 import com.example.parstagram.R;
 import com.example.parstagram.activities.MainActivity;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -39,6 +42,7 @@ public class ProfileFragment extends Fragment {
 
     private RecyclerView rvGridPosts;
     private TextView tvProfileUsername;
+    private TextView tvProfileBiography;
     private ImageView ivProfilePicture;
     private Button btnEditProfile;
 
@@ -53,10 +57,20 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvGridPosts = view.findViewById(R.id.rvGridPosts);
         tvProfileUsername = view.findViewById(R.id.tvProfileUsername);
+        tvProfileBiography = view.findViewById(R.id.tvProfileBiography);
         ivProfilePicture = view.findViewById(R.id.ivEditProfilePicture);
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
 
-        tvProfileUsername.setText(ParseUser.getCurrentUser().getUsername());
+        ParseUser current = ParseUser.getCurrentUser();
+        current.fetchInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+                tvProfileUsername.setText(current.getUsername());
+                tvProfileBiography.setText(current.getString("bio"));
+            }
+        });
+
+//      btnEditProfile.setVisibility(View.VISIBLE);
 
         ParseFile profile = ParseUser.getCurrentUser().getParseFile("profile");
         if (profile != null) {

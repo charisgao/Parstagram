@@ -21,8 +21,8 @@ The following **required** functionality is completed:
 The following **stretch** features are implemented:
 
 - [X] Style the login page to look like the real Instagram login page.
-- [ ] Style the feed to look like the real Instagram feed.
-- [ ] User can load more posts once they reach the bottom of the feed using endless scrolling.
+- [X] Style the feed to look like the real Instagram feed.
+- [X] User can load more posts once they reach the bottom of the feed using endless scrolling.
 - [X] User should switch between different tabs using fragments and a Bottom Navigation View.
   - [X] Feed Tab (to view all posts from all users)
   - [X] Capture Tab (to make a new post using the Camera and Photo Gallery)

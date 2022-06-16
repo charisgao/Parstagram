@@ -34,9 +34,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.parstagram.BitmapScaler;
 import com.example.parstagram.R;
+import com.parse.GetCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
+
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -49,6 +54,7 @@ public class EditProfileFragment extends Fragment {
 
     private TextView etProfileUsername;
     private ImageView ivEditProfilePicture;
+    private TextView etProfileBio;
 
     private File photoFile;
     public String photoFileName = "profile.jpg";
@@ -73,10 +79,18 @@ public class EditProfileFragment extends Fragment {
 
         etProfileUsername = view.findViewById(R.id.etProfileUsername);
         ivEditProfilePicture = view.findViewById(R.id.ivEditProfilePicture);
+        etProfileBio = view.findViewById(R.id.etProfileBio);
 
-        etProfileUsername.setText(ParseUser.getCurrentUser().getUsername());
+        ParseUser current = ParseUser.getCurrentUser();
+        current.fetchInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+                etProfileUsername.setText(current.getUsername());
+                etProfileBio.setText(current.getString("bio"));
+            }
+        });
 
-        ParseFile profile = ParseUser.getCurrentUser().getParseFile("profile");
+        ParseFile profile = current.getParseFile("profile");
         if (profile != null) {
             Glide.with(getContext()).load(profile.getUrl()).placeholder(R.drawable.profile).circleCrop().into(ivEditProfilePicture);
         }
@@ -84,8 +98,20 @@ public class EditProfileFragment extends Fragment {
         etProfileUsername.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 String newUsername = etProfileUsername.getText().toString();
-                ParseUser.getCurrentUser().put("username", newUsername);
-                ParseUser.getCurrentUser().saveInBackground();
+                current.put("username", newUsername);
+                current.saveInBackground();
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
+        etProfileBio.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                String newBio = etProfileBio.getText().toString();
+                current.put("bio", newBio);
+                current.saveInBackground();
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}

@@ -24,8 +24,7 @@
         android:layout_marginEnd="15dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Username"
         app:layout_constraintTop_toBottomOf="@+id/ivEditProfilePicture" />
@@ -40,5 +39,29 @@
         app:layout_constraintBottom_toBottomOf="@+id/etProfileUsername"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/etProfileUsername" />
+
+    <EditText
+        android:id="@+id/etProfileBio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/Biography"
+        app:layout_constraintTop_toBottomOf="@+id/etProfileUsername" />
+
+    <TextView
+        android:id="@+id/Biography"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Biography: "
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/etProfileBio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etProfileBio" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

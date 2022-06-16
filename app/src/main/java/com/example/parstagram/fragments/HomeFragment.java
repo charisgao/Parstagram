@@ -127,7 +127,9 @@ public class HomeFragment extends Fragment {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
         query.addDescendingOrder(Post.KEY_CREATED_KEY);
-        query.whereGreaterThan("createdAt", lastCreatedAt);
+
+        // Skips already loaded posts
+        query.whereLessThan("createdAt", lastCreatedAt);
         // Start an asynchronous call for posts
         query.findInBackground(new FindCallback<Post>() {
             @Override

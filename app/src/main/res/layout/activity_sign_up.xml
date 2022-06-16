@@ -25,6 +25,9 @@
         android:layout_marginTop="300dp"
         android:ems="10"
         android:hint="email"
+        android:padding="12dp"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/edittext_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,8 +36,11 @@
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/edittext_bg"
         android:ems="10"
         android:hint="@string/username"
+        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEmail" />
@@ -46,6 +52,8 @@
         android:layout_marginTop="5dp"
         android:ems="10"
         android:hint="@string/password"
+        android:padding="12dp"
+        android:background="@drawable/edittext_bg"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,6 +66,7 @@
         android:layout_marginTop="5dp"
         android:backgroundTint="@color/login_blue"
         android:text="Sign up"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />
