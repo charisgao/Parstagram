@@ -77,14 +77,14 @@ public class ProfileFragment extends Fragment {
             Glide.with(getContext()).load(profile.getUrl()).placeholder(R.drawable.profile).circleCrop().into(ivProfilePicture);
         }
 
-            btnEditProfile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    EditProfileFragment editProfileFragment = new EditProfileFragment();
-                    FragmentTransaction transaction =((MainActivity) getContext()).getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.flContainer, editProfileFragment).addToBackStack(null).commit();
-                }
-            });
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditProfileFragment editProfileFragment = new EditProfileFragment();
+                FragmentTransaction transaction =((MainActivity) getContext()).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.flContainer, editProfileFragment).addToBackStack(null).commit();
+            }
+        });
 
         profilePosts = new ArrayList<>();
         profileAdapter = new ProfileAdapter(getContext(), profilePosts);

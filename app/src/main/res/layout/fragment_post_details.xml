@@ -31,8 +31,8 @@
 
     <ImageView
         android:id="@+id/ivDetailsImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,7 @@
         tools:src="@tools:sample/avatars" />
 
     <ImageButton
-        android:id="@+id/ibHeart"
+        android:id="@+id/ibDetailsHeart"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_marginStart="10dp"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivDetailsImage" />
 
     <ImageButton
-        android:id="@+id/ibComment"
+        android:id="@+id/ibDetailsComment"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_marginStart="15dp"
@@ -60,7 +60,7 @@
         android:background="@color/white"
         android:scaleType="fitXY"
         android:src="@drawable/ufi_comment"
-        app:layout_constraintStart_toEndOf="@+id/ibHeart"
+        app:layout_constraintStart_toEndOf="@+id/ibDetailsHeart"
         app:layout_constraintTop_toBottomOf="@+id/ivDetailsImage" />
 
     <TextView
@@ -71,7 +71,7 @@
         android:layout_marginTop="10dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ibHeart"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailsNumLikes"
         tools:text="charis" />
 
     <TextView
@@ -83,7 +83,7 @@
         android:layout_marginEnd="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvDetailsUsername2"
-        app:layout_constraintTop_toBottomOf="@+id/ibComment"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailsNumLikes"
         tools:text="text here for a description!" />
 
     <TextView
@@ -95,4 +95,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="7h" />
+
+    <TextView
+        android:id="@+id/tvDetailsNumLikes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ibDetailsHeart"
+        tools:text="5 likes" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

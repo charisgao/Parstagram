@@ -35,7 +35,7 @@ The following **stretch** features are implemented:
   - [X] User Profile shows posts in a grid
 - [ ] After the user submits a new post, show an indeterminate progress bar while the post is being uploaded to Parse
 - [ ] User can comment on a post and see all comments for each post in the post details screen.
-- [ ] User can like a post and see number of likes for each post in the post details screen.
+- [X] User can like a post and see number of likes for each post in the post details screen.
 
 The following **additional** features are implemented:
 
@@ -43,8 +43,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. Databases + ways to implement the like feature (many-to-many relationship)
+2. Fragments
 
 ## Video Walkthrough
 
