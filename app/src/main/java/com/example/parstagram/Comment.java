@@ -15,8 +15,6 @@ public class Comment extends ParseObject {
     public static final String KEY_CREATED_KEY = "createdAt";
     public static final String KEY_COMMENT = "Comment";
 
-    public boolean addComment = false;
-
     public ParseUser getUser() {
         return getParseUser(KEY_USER);
     }

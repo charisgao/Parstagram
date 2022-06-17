@@ -2,7 +2,7 @@
 
 **Parstagram** is a photo sharing app using Parse as its backend.
 
-Time spent: **X** hours spent in total
+Time spent: **18** hours spent in total
 
 ## User Stories
 
@@ -63,6 +63,7 @@ List an 3rd party libraries, icons, graphics, or other assets you used in your a
 ## Notes
 
 Describe any challenges encountered while building the app.
+- My main challenge while building this app was implementing the like and comment features. I was initially unsure how to store the information (ArrayLists through the Post or User class or as separate classes in the database). After discussing with my manager, I decided that Like and Comment should each be separate classes in the database since there is a many-to-many relationship between users and posts. For the like and comment features, in the database, I have pointers to the user who took the action as well as the post where the action occurred. I also had some difficulties querying the correct posts or getting the correct count for the number of likes and comments. I resolved this issue by learning more about queries and various terms I can include such as whereEqualTo.
 
 ## License
 
