@@ -78,7 +78,7 @@
         android:id="@+id/ibComment"
         android:layout_width="28dp"
         android:layout_height="28dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="47dp"
         android:layout_marginTop="10dp"
         android:background="@color/white"
         android:scaleType="fitXY"
@@ -95,5 +95,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ibHeart"
         tools:text="5 likes" />
+
+    <TextView
+        android:id="@+id/tvNumComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toEndOf="@+id/tvNumLikes"
+        app:layout_constraintTop_toBottomOf="@+id/ibComment"
+        tools:text="5 comments" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

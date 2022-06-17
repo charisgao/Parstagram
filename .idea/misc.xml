@@ -18,6 +18,8 @@
         <entry key="app/src/main/res/layout/fragment_other_profile.xml" value="0.36186594202898553" />
         <entry key="app/src/main/res/layout/fragment_post_details.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.40260416666666665" />
+        <entry key="app/src/main/res/layout/item_comment.xml" value="0.36186594202898553" />
+        <entry key="app/src/main/res/layout/item_comment_snippet.xml" value="0.1884498480243161" />
         <entry key="app/src/main/res/layout/item_grid.xml" value="0.405938720703125" />
         <entry key="app/src/main/res/layout/item_post.xml" value="0.30040893554687503" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.1" />
@@ -31,5 +33,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.349755859375" />
+      </ProjectState>
+    </option>
   </component>
 </project>

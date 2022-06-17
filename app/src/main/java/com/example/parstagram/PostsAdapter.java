@@ -1,6 +1,7 @@
 package com.example.parstagram;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -72,7 +73,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         private TextView tvDescription;
         private TextView tvCreatedAt;
         private ImageButton ibHeart;
+        private ImageButton ibComment;
         private TextView tvNumLikes;
+        private TextView tvNumComments;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -82,7 +85,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
             tvNumLikes = itemView.findViewById(R.id.tvNumLikes);
+            tvNumComments = itemView.findViewById(R.id.tvNumComments);
             ibHeart = itemView.findViewById(R.id.ibHeart);
+            ibComment = itemView.findViewById(R.id.ibComment);
 
             // When the user clicks on a row, show PostDetailsFragment for the selected post
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +128,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
             bindButton(post);
             bindLikeCount(post);
+            bindCommentCount(post);
 
             ivProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -191,6 +197,21 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
                         tvNumLikes.setText(String.valueOf(count + " like"));
                     } else {
                         tvNumLikes.setText(String.valueOf(count + " likes"));
+                    }
+                }
+            });
+        }
+
+        public void bindCommentCount(Post post) {
+            ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
+            query.whereEqualTo(Comment.KEY_POST, post);
+            query.countInBackground(new CountCallback() {
+                @Override
+                public void done(int count, ParseException e) {
+                    if (count == 1) {
+                        tvNumComments.setText(String.valueOf(count + " comment"));
+                    } else {
+                        tvNumComments.setText(String.valueOf(count + " comments"));
                     }
                 }
             });

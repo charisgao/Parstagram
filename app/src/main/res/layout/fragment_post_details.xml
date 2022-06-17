@@ -55,7 +55,7 @@
         android:id="@+id/ibDetailsComment"
         android:layout_width="28dp"
         android:layout_height="28dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="45dp"
         android:layout_marginTop="10dp"
         android:background="@color/white"
         android:scaleType="fitXY"
@@ -68,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDetailsNumLikes"
@@ -79,7 +79,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvDetailsUsername2"
@@ -105,5 +105,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ibDetailsHeart"
         tools:text="5 likes" />
+
+    <TextView
+        android:id="@+id/tvDetailsNumComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toEndOf="@+id/tvDetailsNumLikes"
+        app:layout_constraintTop_toBottomOf="@+id/ibDetailsComment"
+        tools:text="5 comments" />
+
+    <View
+        android:id="@+id/border"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toTopOf="@+id/rvComments"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailsUsername2" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvComments"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/tvDetailsDescription"
+        app:layout_constraintStart_toStartOf="@+id/tvDetailsUsername2"
+        app:layout_constraintTop_toBottomOf="@+id/border" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
