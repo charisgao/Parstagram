@@ -1,30 +1,23 @@
 package com.example.parstagram;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.parstagram.activities.MainActivity;
 import com.example.parstagram.fragments.PostDetailsFragment;
+import com.example.parstagram.fragments.ProfileFragment;
 import com.parse.ParseFile;
 
-import org.w3c.dom.Text;
-
-import java.util.Date;
 import java.util.List;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder>{
@@ -67,8 +60,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivImageGrid = itemView.findViewById(R.id.ivImageGrid);
-
-
         }
 
         public void bind(Post post) {
@@ -77,6 +68,18 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).centerCrop().into(ivImageGrid);
             }
+
+            ivImageGrid.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PostDetailsFragment postDetailsFragment = new PostDetailsFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("post", post);
+                    postDetailsFragment.setArguments(bundle);
+                    FragmentTransaction transaction =((MainActivity) context).getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.flContainer, postDetailsFragment).addToBackStack(null).commit();
+                }
+            });
         }
     }
 }

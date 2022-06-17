@@ -46,6 +46,16 @@ public class ProfileFragment extends Fragment {
     private ImageView ivProfilePicture;
     private Button btnEditProfile;
 
+    ParseUser current = ParseUser.getCurrentUser();;
+
+    public ProfileFragment() {
+        // Required empty public constructor
+    }
+
+    public ProfileFragment(ParseUser user) {
+        current = user;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,7 +71,6 @@ public class ProfileFragment extends Fragment {
         ivProfilePicture = view.findViewById(R.id.ivEditProfilePicture);
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
 
-        ParseUser current = ParseUser.getCurrentUser();
         current.fetchInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject object, ParseException e) {
@@ -70,9 +79,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-//      btnEditProfile.setVisibility(View.VISIBLE);
+        if (current.equals(ParseUser.getCurrentUser())) {
+            btnEditProfile.setVisibility(View.VISIBLE);
+        } else {
+            btnEditProfile.setVisibility(View.GONE);
+        }
 
-        ParseFile profile = ParseUser.getCurrentUser().getParseFile("profile");
+        ParseFile profile = current.getParseFile("profile");
         if (profile != null) {
             Glide.with(getContext()).load(profile.getUrl()).placeholder(R.drawable.profile).circleCrop().into(ivProfilePicture);
         }
@@ -101,7 +114,7 @@ public class ProfileFragment extends Fragment {
     protected void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        query.whereEqualTo(Post.KEY_USER, current);
         query.setLimit(20);
         query.addDescendingOrder(Post.KEY_CREATED_KEY);
 
